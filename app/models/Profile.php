@@ -73,6 +73,4 @@ class Profile extends \app\core\Model{
 			['profile_id'=>$this->profile_id]
 		);
 	}
-
-
 }
