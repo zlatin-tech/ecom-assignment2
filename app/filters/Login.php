@@ -12,5 +12,4 @@ class Login implements \app\core\AccessFilter{
 		}
 		return false;//not denied
 	}
-
 }
