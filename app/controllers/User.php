@@ -6,15 +6,11 @@ class User extends \app\core\Controller{
 	function login(){
 		//show the login form and log the user in
 		if($_SERVER['REQUEST_METHOD'] === 'POST'){
-			//log the user in... if the password is right
-			//get the user from the database
 			$username = $_POST['username'];
 			$user = new \app\models\User();
 			$user = $user->get($username);
-			//check the password against the hash
 			$password = $_POST['password'];
 			if($user && $user->active && password_verify($password, $user->password_hash)){
-				//remember that this is the user logging in...
 				$_SESSION['user_id'] = $user->user_id;
 
 				header('location:/User/securePlace');
@@ -27,11 +23,7 @@ class User extends \app\core\Controller{
 	}
 
 	function logout(){
-		//session_destroy();
-		//$_SESSION['user_id'] = null;
-
 		session_destroy();
-
 		header('location:/User/login');
 	}
 
@@ -57,7 +49,7 @@ class User extends \app\core\Controller{
 			//redirect to a good place
 			header('location:/User/login');
 		}else{
-			$this->view('User/registration');
+			$this->view('User/register');
 		}
 	}
 
@@ -85,17 +77,14 @@ class User extends \app\core\Controller{
 			$this->view('User/update', $user);
 		}
 	}
-
 	function delete(){
 		if(!isset($_SESSION['user_id'])){//is not logged in
 			header('location:/User/login');
 			return;
 		}
-
 		$user = new \app\models\User();
 		$user = $user->getById($_SESSION['user_id']);
 		$user->delete();
 		header('location:/User/logout');
 	}
-
 }

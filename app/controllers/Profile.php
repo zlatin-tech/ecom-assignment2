@@ -48,23 +48,4 @@ class Profile extends \app\core\Controller{
 			$this->view('Profile/modify', $profile);
 		}
 	}
-
-	public function delete(){
-		//present the user with a form to confirm the deletion that is requested and delete if the form is submitted
-/*		//make sure that the user is logged in
-		if(!isset($_SESSION['user_id'])){
-			header('location:/User/login');
-			return;
-		}
-*/
-		$profile = new \app\models\Profile();
-		$profile = $profile->getForUser($_SESSION['user_id']);
-
-		if($_SERVER['REQUEST_METHOD'] === 'POST'){
-			$profile->delete();
-			header('location:/Profile/index');
-		}else{
-			$this->view('Profile/delete',$profile);
-		}
-	}
 }

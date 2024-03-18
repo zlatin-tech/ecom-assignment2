@@ -6,19 +6,12 @@
     <title>Person Page</title>
 </head>
 <body>
-    <h1>Hello, anonymous user!</h1>
-    <h2>Consider <a href="/User/register">registering</a> or logging in to have access to the following features</h2>
-    <ul>
-        <li>Make publications</li>
-        <li>Correct publications</li>
-        <li>Delete publications</li>
-        <li>Make your publications public or private</li>
-        <li>Make comments on publications</li>
-        <li>Edit comments on publications</li>
-        <li>Delete comments on publications</li>
-        <li>Edit your profile information</li>
-    </ul>
-    <h2>Until then, enjoy our platform anonymously</h2>
+    <h1>Welcome back!</h1>
+
+    <form action="User/logout" method="post">
+        <button type="submit">Logout</button>
+    </form>
+
     <div id="publications-container">
         <?php foreach ($data['publications'] as $publication): ?>
             <div class="publication">
