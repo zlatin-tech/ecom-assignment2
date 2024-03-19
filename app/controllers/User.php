@@ -13,7 +13,7 @@ class User extends \app\core\Controller{
 			if($user && $user->active && password_verify($password, $user->password_hash)){
 				$_SESSION['user_id'] = $user->user_id;
 
-				header('location:/User/securePlace');
+				header('location:/Main/index');
 			}else{
 				header('location:/User/login');
 			}
@@ -24,15 +24,7 @@ class User extends \app\core\Controller{
 
 	function logout(){
 		session_destroy();
-		header('location:/User/login');
-	}
-
-	function securePlace(){
-		if(!isset($_SESSION['user_id'])){
-			header('location:/User/login');
-			return;
-		}
-		echo 'You are safe. You are in a secure location.';
+		header('location:/Main/index');
 	}
 
 	function register(){
@@ -53,30 +45,7 @@ class User extends \app\core\Controller{
 		}
 	}
 
-	//update our own user record (only if I am logged in)
-	function update(){
-		if(!isset($_SESSION['user_id'])){
-			header('location:/User/login');
-			return;
-		}
-
-		$user = new \app\models\User();
-		$user = $user->getById($_SESSION['user_id']);
-
-		if($_SERVER['REQUEST_METHOD'] === 'POST'){
-			//process the update
-			$user->username = $_POST['username'];
-			//change the password only if one is sent
-			$password = $_POST['password'];
-			if(!empty($password)){//should be false if ''
-				$user->password_hash = password_hash($password, PASSWORD_DEFAULT);
-			}//otherwise remains as it was
-			$user->update();
-			header('location:/User/update');
-		}else{
-			$this->view('User/update', $user);
-		}
-	}
+	
 	function delete(){
 		if(!isset($_SESSION['user_id'])){//is not logged in
 			header('location:/User/login');

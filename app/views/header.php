@@ -14,13 +14,16 @@
         <div class="container-fluid">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="?url=Main/index">Landing Page</a>
+                    <a class="nav-link" href="/Main/index">Landing Page</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="?url=Contact/index">Contact Us</a>
+                    <a class="nav-link" href="/User/login">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="?url=Contact/read">See Messages</a>
+                    <a class="nav-link" href="/User/logout">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/User/register">Register</a>
                 </li>
                 <li class="nav-item">
                     <form action="" method="POST">

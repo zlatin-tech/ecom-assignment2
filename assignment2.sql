@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Generation Time: Mar 17, 2024 at 06:06 PM
--- Server version: 5.7.39
--- PHP Version: 7.4.33
+-- Host: localhost
+-- Generation Time: Mar 20, 2024 at 12:40 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,7 +35,7 @@ CREATE TABLE `profile` (
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `middle_name` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `profile`
@@ -54,10 +54,10 @@ CREATE TABLE `publication` (
   `publication_id` int(11) NOT NULL,
   `profile_id` int(11) DEFAULT NULL,
   `publication_title` varchar(255) DEFAULT NULL,
-  `publication_text` text,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `publication_text` text DEFAULT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `publication_status` enum('public','private') DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -69,8 +69,8 @@ CREATE TABLE `publication_comment` (
   `publication_comment_id` int(11) NOT NULL,
   `profile_id` int(11) DEFAULT NULL,
   `publication_id` int(11) DEFAULT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -82,15 +82,16 @@ CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password_hash` varchar(60) NOT NULL,
-  `active` tinyint(4) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `active` tinyint(4) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`user_id`, `username`, `password_hash`, `active`) VALUES
-(1, 'Tarzan', '$2y$10$.c/0uj/ezTONgPUYzD/8auuOtxC.pllo8LOotHZVecYKP3XV3EmgK', 1);
+(1, 'Tarzan', '$2y$10$.c/0uj/ezTONgPUYzD/8auuOtxC.pllo8LOotHZVecYKP3XV3EmgK', 1),
+(2, '1', '$2y$10$2tzK33O45eHWrjNyBCF/AOcNWy2qn4PlorlOT21qMHx0WYHlrkJD.', 1);
 
 --
 -- Indexes for dumped tables
@@ -151,7 +152,7 @@ ALTER TABLE `publication_comment`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -174,7 +175,8 @@ ALTER TABLE `publication`
 --
 ALTER TABLE `publication_comment`
   ADD CONSTRAINT `publication_comment_ibfk_1` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`profile_id`),
-  ADD CONSTRAINT `publication_comment_ibfk_2` FOREIGN KEY (`publication_id`) REFERENCES `publication` (`publication_id`);
+  ADD CONSTRAINT `publication_comment_ibfk_2` FOREIGN KEY (`publication_id`) REFERENCES `publication` (`publication_id`),
+  ADD CONSTRAINT `publication_comment_ibfk_3` FOREIGN KEY (`publication_id`) REFERENCES `publication` (`publication_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
