@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Person Page</title>
-</head>
-<body>
+<?php
+     include('app/views/header.php');
+?>
     <h1>Welcome back!</h1>
 
     <form action="User/logout" method="post">
