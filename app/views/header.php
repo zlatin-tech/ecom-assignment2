@@ -31,6 +31,9 @@
                         <input type="submit" name="submit" value="Search">
                     </form>    
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Publication/create">Post New Publication</a>
+                </li>
             </ul>
         </div>
     </nav>

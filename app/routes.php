@@ -14,3 +14,5 @@ $this->addRoute('User/securePlace' , 'User,securePlace');
 $this->addRoute('Profile/index' , 'Profile,index');
 $this->addRoute('Profile/create' , 'Profile,create');
 $this->addRoute('Profile/modify' , 'Profile,modify');
+
+$this->addRoute('Publication/create' , 'Publication,create');
