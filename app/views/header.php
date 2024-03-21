@@ -26,10 +26,11 @@
                     <a class="nav-link" href="/User/register">Register</a>
                 </li>
                 <li class="nav-item">
-                    <form action="" method="POST">
-                        <input type="text" name="searchWord" placeholder="search">
-                        <input type="submit" name="submit" value="Search">
-                    </form>    
+                <form action="/Publication/search" method="POST">
+                    <label for="search">Search Term:</label>
+                    <input type="text" id="search" name="search" required>
+                    <input type="submit" value="Search">
+                </form>   
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/Publication/create">Post New Publication</a>

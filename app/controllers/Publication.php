@@ -17,7 +17,6 @@ class Publication extends \app\core\Controller{
     public function index() {
         $publication = new Publication();
         $publications = $publication->getAllPublications();
-        require_once('views/publications/index.php');
         $this->view('Publication/view');
     }
 
@@ -46,10 +45,9 @@ class Publication extends \app\core\Controller{
     // Show the form for editing the specified publication
     public function edit($id) {
         $publication = Publication::getPublicationById($id);
-        require_once('views/publications/edit.php');
+        $this->view('Publication/edit');
     }
 
-    // Update the specified publication in the database
     public function update($id) {
         $publication = new Publication();
         $publication->publication_id = $id;
@@ -68,11 +66,10 @@ class Publication extends \app\core\Controller{
         header('Location:/Main/index');
     }
 
-    // Search for publications by title or content
     public function search() {
         $searchTerm = $_GET['search'];
         $publication = new Publication();
         $results = $publication->searchPublications($searchTerm);
-        require_once('views/publications/search.php');
+        $this->view('Publication/search');
     }
 }
