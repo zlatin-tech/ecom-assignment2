@@ -3,13 +3,11 @@
 ?>
 
 <h1>Welcome to our app!</h1>
+
 <?php
 foreach($data as $publication){
-
-     ?>
-     <a href="/Publication/view/<?php echo $publication->no; ?>"><?php $publication->title?></a>
-     <?php
-     $this->view('Publication/view', $publication);
+     echo '<a href="/Publication/view/' . $publication->publication_id . '">' . $publication->publication_title . '</a>';
+     echo '<br>';
 }
 ?>
 

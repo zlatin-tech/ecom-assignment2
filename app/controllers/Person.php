@@ -5,6 +5,7 @@ use stdClass;
 
 class Person extends \app\core\Controller{
     public function main(){
-        $this->view('Main/index');
+        $controller = new \app\controllers\Publication();
+        $this->view('Main/index', $controller->getAllPublications());
     }
 }

@@ -38,6 +38,10 @@ class App{
         return false;
     }
 
+    
+    
+
+
     function filtered($controllerInstance, $method){
 
         //create an object that can get information about the controller

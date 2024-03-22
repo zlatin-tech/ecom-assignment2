@@ -52,23 +52,27 @@ class Publication extends \app\core\Model{
         $STMT->execute($data);
     }
 
-    // Fetch all publications, most recent first
-    public function getAllPublications() {
-        // SQL to select all publications, order by timestamp DESC
-        $SQL = 'SELECT * FROM publication ORDER BY timestamp DESC';        ;
+    // Fetch all PUBLIC publications, most recent first
+    public static function getAllPublications() {
+        $SQL = 'SELECT * FROM publication WHERE publication_status = "public" ORDER BY timestamp DESC';        ;
 		$STMT = self::$_conn->prepare($SQL);
 		$STMT->execute();
 		return $STMT->fetchAll(PDO::FETCH_CLASS, 'app\models\Publication');
     }
 
-    // Fetch a single publication by ID
     public static function getPublicationById($publicationId) {
         $SQL = 'SELECT * FROM publication WHERE publication_id = :publication_id';
-		$STMT = self::$_conn->prepare($SQL);
-        $data = ['publication_id'=>$publicationId];
+        $STMT = self::$_conn->prepare($SQL);
+        $data = ['publication_id' => $publicationId];
         $STMT->execute($data);
-        return $STMT->fetch(PDO::FETCH_CLASS, 'app\models\Publication');
+        // Set the fetch mode to FETCH_CLASS before fetching
+        $STMT->setFetchMode(PDO::FETCH_CLASS, 'app\models\Publication');
+        // Fetch the result as an instance of 'app\models\Publication' class
+        return $STMT->fetch();
     }
+    
+
+
 
     // Search publications by title or content
     public static function searchPublications($searchTerm) {

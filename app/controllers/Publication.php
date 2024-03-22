@@ -12,16 +12,23 @@ class Publication extends \app\core\Controller{
          (new HasProfile())->redirected();
      }
 
-    // Display a listing of the publications, most recent first
-    public function index() {
-        $publication = new \app\models\Publication();
-        $publications = $publication->getAllPublications();
-        $this->view('Publication/view', $publications);
+     public function displayPublicationById($id) {
+        echo 'testing';
+        $publication_id = intval($id);  
+        echo 'testing1'; 
+        $publication = \app\models\Publication::getPublicationById($publication_id);   
+        echo 'testing2';
+        $this->view('Publication/view', ['publication' => $publication]);
+        echo 'testing3'; 
     }
+    
 
 
     public function create() {
         $this->view('Publication/create');
+    }
+    public function getAllPublications(){
+        return \app\models\Publication::getAllPublications();
     }
 
     // Store a newly created publication in the database

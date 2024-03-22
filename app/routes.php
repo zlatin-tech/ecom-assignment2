@@ -6,6 +6,7 @@ $this->addRoute('Main/index' , 'Person,main');
 $this->addRoute('Publication/create' , 'Publication,create');
 $this->addRoute('Publication/edit' , 'Publication,edit');
 $this->addRoute('Publication/store' , 'Publication,store');
+$this->addRoute('Publication/view/{id}' , 'Publication,displayPublicationById');
 
 $this->addRoute('User/logout' , 'User,logout');
 $this->addRoute('User/update' , 'User,update');

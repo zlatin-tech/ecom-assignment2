@@ -16,15 +16,23 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/Main/index">Landing Page</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/User/login">Login</a>
-                </li>
-                <li class="nav-item">
+                <?php 
+                if(isset($_SESSION['user_id'])){
+                    echo '<li class="nav-item">
                     <a class="nav-link" href="/User/logout">Logout</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/User/register">Register</a>
-                </li>
+                    <a class="nav-link" href="/Profile/index">Profile</a>
+                </li>';
+               }else{
+                    echo '<li class="nav-item">
+                            <a class="nav-link" href="/User/login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/User/register">Register</a>
+                        </li>';
+               }
+                ?>
                 <li class="nav-item">
                 <form action="/Publication/search" method="POST">
                     <label for="search">Search Term:</label>
