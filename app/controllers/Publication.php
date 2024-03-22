@@ -1,55 +1,57 @@
 <?php
 namespace app\controllers;
 
-use app\models\Publication;
 use app\filters\Login;
 use app\filters\HasProfile;
 
 
 class Publication extends \app\core\Controller{
-    // Apply the Login filter to ensure user is logged in for certain actions
-    public function __construct() {
-        (new Login())->redirected(['except' => ['index', 'show', 'search']]);
-        (new HasProfile())->redirected();
-    }
+// Apply the Login filter to ensure user is logged in for certain actions
+     public function __construct() {
+         (new Login())->redirected(['except' => ['index', 'show', 'search']]);
+         (new HasProfile())->redirected();
+     }
 
     // Display a listing of the publications, most recent first
     public function index() {
-        $publication = new Publication();
+        $publication = new \app\models\Publication();
         $publications = $publication->getAllPublications();
-        $this->view('Publication/view');
+        $this->view('Publication/view', $publications);
     }
 
-    // Show the form for creating a new publication
+
     public function create() {
         $this->view('Publication/create');
     }
 
     // Store a newly created publication in the database
     public function store() {
-        $publication = new Publication();
-        $publication->profile_id = $_SESSION['profile_id'];
+        $publication = new \app\models\Publication();
+        $profile = new \app\models\Profile();
+		$profile = $profile->getForUser($_SESSION['user_id']);
+        $publication->profile_id = $profile->profile_id;
         $publication->publication_title = $_POST['title'];
         $publication->publication_text = $_POST['text'];
         $publication->publication_status = $_POST['status'];
         $publication->createPublication();
-        header('Location: /publications');
+        header('Location:/Main/index');
     }
 
     // Display the specified publication
     public function show($id) {
-        $publication = Publication::getPublicationById($id);
-        require_once('views/publications/show.php');
+        $publication = \app\models\Publication::getPublicationById($id);
+        $this->view('Publication/view', $publication);
+
     }
 
     // Show the form for editing the specified publication
     public function edit($id) {
-        $publication = Publication::getPublicationById($id);
+        $publication = \app\models\Publication::getPublicationById($id);
         $this->view('Publication/edit');
     }
 
     public function update($id) {
-        $publication = new Publication();
+        $publication = new \app\models\Publication();
         $publication->publication_id = $id;
         $publication->publication_title = $_POST['title'];
         $publication->publication_text = $_POST['text'];
@@ -60,7 +62,7 @@ class Publication extends \app\core\Controller{
 
     // Remove the specified publication from the database
     public function destroy($id) {
-        $publication = new Publication();
+        $publication = new \app\models\Publication();
         $publication->publication_id = $id;
         $publication->deletePublication();
         header('Location:/Main/index');
@@ -68,7 +70,7 @@ class Publication extends \app\core\Controller{
 
     public function search() {
         $searchTerm = $_GET['search'];
-        $publication = new Publication();
+        $publication = new \app\models\Publication();
         $results = $publication->searchPublications($searchTerm);
         $this->view('Publication/search');
     }

@@ -3,7 +3,7 @@ namespace app\models;
 
 use PDO;
 
-class Publication {
+class Publication extends \app\core\Model{
     public $publication_id;
     public $profile_id;
     public $publication_title;
@@ -18,14 +18,16 @@ class Publication {
         //define the SQL query
 		$SQL = 'INSERT INTO publication (profile_id,publication_title, publication_text, publication_status) VALUES (:profile_id, :publication_title, :publication_text, :publication_status)';
 		//prepare the statement
+		
 		$STMT = self::$_conn->prepare($SQL);
 		//execute
-		$data = ['profile_id' => $this->profile_id,
+		$data = ['profile_id' => intval($this->profile_id),
                 'publication_title' => $this->publication_title,
                 'publication_text'=> $this->publication_text,
                 'publication_status'=> $this->publication_status];
 		$STMT->execute($data);
     }
+    
 
     //update
     public function editPublication() {

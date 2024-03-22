@@ -24,7 +24,7 @@ class User extends \app\core\Controller{
 
 	function logout(){
 		session_destroy();
-		header('location:/Main/index');
+		header('location:/User/login');
 	}
 
 	function register(){
