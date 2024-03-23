@@ -13,8 +13,9 @@ class Publication extends \app\core\Controller{
 
      public function displayPublicationById($id) {
         $publication_id = intval($id);  
-        $publication = \app\models\Publication::getPublicationById($publication_id);   
-        $this->view('Publication/view', ['publication' => $publication]);
+        $publication = \app\models\Publication::getPublicationById($publication_id); 
+        $comments = \app\models\Comment::getComments($publication_id);  
+        $this->view('Publication/view', ['publication' => $publication, 'comments' => $comments]);
     }
     #[Login]
     #[HasProfile]

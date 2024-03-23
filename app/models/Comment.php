@@ -12,59 +12,44 @@ class Comment extends \app\core\Model{
 
 
     public function create() {
-        // Define the SQL query
-        $SQL = 'INSERT INTO comments (publication_id, comment_text) VALUES (:publication_id, :comment_text)';
-        
-        // Prepare the statement
+
+
+        $SQL = 'INSERT INTO publication_comment (profile_id, publication_id, comment_text) VALUES (:profile_id, :publication_id, :comment_text)';
         $STMT = self::getConnection()->prepare($SQL);
-        
-        // Execute
         $data = [
+            'profile_id' => $this->profile_id,
             'publication_id' => $this->publication_id,
             'comment_text' => $this->comment_text
         ];
         $STMT->execute($data);
     }
-    public function delete($commentId) {
-        // Define the SQL query
-        $SQL = 'DELETE FROM comments WHERE id = :comment_id';
 
-        // Prepare the statement
+    public function delete() {
+        $SQL = 'DELETE FROM publication_comment WHERE publication_comment_id = :comment_id';
+
         $STMT = self::getConnection()->prepare($SQL);
-
-        // Execute
         $data = [
-            'comment_id' => $commentId
+            'comment_id' => $this->comment_id
         ];
         $STMT->execute($data);
     }
-    public function getComments($publicationId) {
-        // Define the SQL query
-        $SQL = 'SELECT * FROM comments WHERE publication_id = :publication_id';
 
-        // Prepare the statement
+    public static function getComments($publicationId) {
+        $SQL = 'SELECT * FROM publication_comment WHERE publication_id = :publication_id';
         $STMT = self::getConnection()->prepare($SQL);
-
-        // Execute
         $data = [
             'publication_id' => $publicationId
         ];
         $STMT->execute($data);
-
-        // Return all records
         return $STMT->fetchAll(PDO::FETCH_CLASS, 'app\models\Comment');
     }
-    public function update($commentId) {
-        // Define the SQL query
-        $SQL = 'UPDATE comments SET comment_text = :comment_text WHERE comment_id = :comment_id';
-
-        // Prepare the statement
+    
+    public function update() {
+        $SQL = 'UPDATE publication_comment SET comment_text = :comment_text WHERE publication_comment_id = :comment_id';
         $STMT = self::getConnection()->prepare($SQL);
-
-        // Execute
         $data = [
             'comment_text' => $this->comment_text,
-            'comment_id' => $commentId
+            'comment_id' => $this->comment_id
         ];
         $STMT->execute($data);
     }

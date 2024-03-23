@@ -14,7 +14,42 @@ class Comment extends \app\core\Controller{
         $comment->profile_id = $profile->profile_id;
         $comment->publication_id = $publication_id;
         $comment->comment_text = $_POST['text'];
-        $comment->createComment();
+        $comment->create();
         header('Location:/Publication/view/'.$publication_id);
     }
+    #[Login]
+    #[HasProfile]
+    public function delete($comment_id) {
+        $comment = \app\models\Comment::find($comment_id);
+        $publication_id = $comment->publication_id;
+        $profile = new \app\models\Profile();
+        $profile = $profile->getForUser($_SESSION['user_id']);
+
+        if ($comment && $comment->profile_id == $profile->profile_id) {
+            $comment->delete();
+        }
+        header('Location:/Publication/view/'.$publication_id);
+    }
+
+
+
+    #[Login]
+    #[HasProfile]
+    public function update($comment_id) {
+        $comment = \app\models\Comment::find($comment_id);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getForUser($_SESSION['user_id']);
+
+        if ($comment && $comment->profile_id == $profile->profile_id) {
+            $comment->comment_text = $_POST['text'];
+            $comment->update();
+        }
+        header('Location:/Publication/view/'.$comment->publication_id);
+    }
+
+    public function getComments($publication_id) {
+        $comments = \app\models\Comment()::getComments($publication_id);
+        return $comments;
+    }
+    
 }
