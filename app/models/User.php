@@ -14,7 +14,7 @@ class User extends \app\core\Model{
 		//define the SQL query
 		$SQL = 'INSERT INTO user (username, password_hash) VALUES (:username, :password_hash)';
 		//prepare the statement
-		$STMT = self::$_conn->prepare($SQL);
+		$STMT = self::getConnection()->prepare($SQL);
 		//execute
 		$data = ['username' => $this->username,
 				'password_hash' => $this->password_hash];
@@ -23,7 +23,7 @@ class User extends \app\core\Model{
 
 	public function get($username){
 		$SQL = 'SELECT * FROM user WHERE username = :username';
-		$STMT = self::$_conn->prepare($SQL);
+		$STMT = self::getConnection()->prepare($SQL);
 		$STMT->execute(['username' => $username]);
 		$STMT->setFetchMode(PDO::FETCH_CLASS, 'app\models\User');
 		return $STMT->fetch();//fetch
@@ -31,7 +31,7 @@ class User extends \app\core\Model{
 
 	public function getById($user_id){
 		$SQL = 'SELECT * FROM user WHERE user_id = :user_id';
-		$STMT = self::$_conn->prepare($SQL);
+		$STMT = self::getConnection()->prepare($SQL);
 		$STMT->execute(['user_id' => $user_id]);
 		$STMT->setFetchMode(PDO::FETCH_CLASS, 'app\models\User');
 		return $STMT->fetch();//fetch
@@ -40,14 +40,14 @@ class User extends \app\core\Model{
 	
 	public function update(){
 		$SQL = 'UPDATE user SET username = :username, password_hash = :password_hash WHERE user_id = :user_id';
-		$STMT = self::$_conn->prepare($SQL);
+		$STMT = self::getConnection()->prepare($SQL);
 		$STMT->execute((array)$this);
 	}
 
 	function delete(){
 		//change anything but the PK
 		$SQL = 'UPDATE user SET active = :active WHERE user_id = :user_id';
-		$STMT = self::$_conn->prepare($SQL);
+		$STMT = self::getConnection()->prepare($SQL);
 		$data = ['user_id'=>$this->user_id, 'active'=>0];
 		$STMT->execute($data);
 	}

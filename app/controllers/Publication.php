@@ -6,24 +6,18 @@ use app\filters\HasProfile;
 
 
 class Publication extends \app\core\Controller{
-// Apply the Login filter to ensure user is logged in for certain actions
-     public function __construct() {
-         (new Login())->redirected(['except' => ['index', 'show', 'search']]);
-         (new HasProfile())->redirected();
-     }
+
+     public function main(){
+        $this->view('Main/index', $this->getAllPublications());
+    }
 
      public function displayPublicationById($id) {
-        echo 'testing';
         $publication_id = intval($id);  
-        echo 'testing1'; 
         $publication = \app\models\Publication::getPublicationById($publication_id);   
-        echo 'testing2';
         $this->view('Publication/view', ['publication' => $publication]);
-        echo 'testing3'; 
     }
-    
-
-
+    #[Login]
+    #[HasProfile]
     public function create() {
         $this->view('Publication/create');
     }
@@ -32,6 +26,8 @@ class Publication extends \app\core\Controller{
     }
 
     // Store a newly created publication in the database
+    #[Login]
+    #[HasProfile]
     public function store() {
         $publication = new \app\models\Publication();
         $profile = new \app\models\Profile();
@@ -44,19 +40,16 @@ class Publication extends \app\core\Controller{
         header('Location:/Main/index');
     }
 
-    // Display the specified publication
-    public function show($id) {
-        $publication = \app\models\Publication::getPublicationById($id);
-        $this->view('Publication/view', $publication);
-
-    }
-
     // Show the form for editing the specified publication
+    #[Login]
+    #[HasProfile]
     public function edit($id) {
         $publication = \app\models\Publication::getPublicationById($id);
         $this->view('Publication/edit');
     }
 
+    #[Login]
+    #[HasProfile]
     public function update($id) {
         $publication = new \app\models\Publication();
         $publication->publication_id = $id;
@@ -68,6 +61,8 @@ class Publication extends \app\core\Controller{
     }
 
     // Remove the specified publication from the database
+    #[Login]
+    #[HasProfile]
     public function destroy($id) {
         $publication = new \app\models\Publication();
         $publication->publication_id = $id;
