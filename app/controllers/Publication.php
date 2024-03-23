@@ -43,21 +43,28 @@ class Publication extends \app\core\Controller{
     // Show the form for editing the specified publication
     #[Login]
     #[HasProfile]
-    public function edit($id) {
-        $publication = \app\models\Publication::getPublicationById($id);
-        $this->view('Publication/edit');
+    public function edit($publication_id) {
+        $publication = \app\models\Publication::getPublicationById($publication_id);
+        $profile = new \app\models\Profile();
+		$profile = $profile->getForUser($_SESSION['user_id']);
+        if($publication->profile_id == $profile->profile_id){
+            $this->view('Publication/edit', $publication);
+        }else{
+            header('Location:/Publication/view/'.$publication_id);
+        }
     }
 
     #[Login]
     #[HasProfile]
-    public function update($id) {
+    public function update($publication_id) {
         $publication = new \app\models\Publication();
-        $publication->publication_id = $id;
+        $publication->publication_id = $publication_id;
         $publication->publication_title = $_POST['title'];
         $publication->publication_text = $_POST['text'];
         $publication->publication_status = $_POST['status'];
         $publication->editPublication();
-        header('Location:/Main/index');
+        header('Location:/Publication/view/'.$publication_id);
+
     }
 
     // Remove the specified publication from the database

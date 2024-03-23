@@ -56,4 +56,9 @@ class User extends \app\core\Controller{
 		$user->delete();
 		header('location:/User/logout');
 	}
+	function getById($user_id){
+		$user = new \app\models\User();
+		$user = $user->getById($user_id);
+		return $user;
+	}
 }

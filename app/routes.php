@@ -4,9 +4,10 @@ $this->addRoute('User/register' , 'User,register');
 $this->addRoute('User/login' , 'User,login');
 $this->addRoute('Main/index' , 'Publication,main');
 $this->addRoute('Publication/create' , 'Publication,create');
-$this->addRoute('Publication/edit' , 'Publication,edit');
+$this->addRoute('Publication/edit/{publication_id}' , 'Publication,edit');
 $this->addRoute('Publication/store' , 'Publication,store');
 $this->addRoute('Publication/view/{id}' , 'Publication,displayPublicationById');
+$this->addRoute('Publication/update/{publication_id}' , 'Publication,update');
 
 $this->addRoute('User/logout' , 'User,logout');
 $this->addRoute('User/update' , 'User,update');

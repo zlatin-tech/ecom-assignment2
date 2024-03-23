@@ -18,7 +18,6 @@ class Publication extends \app\core\Model{
         //define the SQL query
 		$SQL = 'INSERT INTO publication (profile_id,publication_title, publication_text, publication_status) VALUES (:profile_id, :publication_title, :publication_text, :publication_status)';
 		//prepare the statement
-		
 		$STMT = self::getConnection()->prepare($SQL);
 		//execute
 		$data = ['profile_id' => intval($this->profile_id),
