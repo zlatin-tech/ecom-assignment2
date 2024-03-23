@@ -19,8 +19,8 @@ class Comment extends \app\core\Controller{
     }
     #[Login]
     #[HasProfile]
-    public function delete($comment_id) {
-        $comment = \app\models\Comment::find($comment_id);
+    public function delete($publication_comment_id) {
+        $comment = \app\models\Comment::find($publication_comment_id);
         $publication_id = $comment->publication_id;
         $profile = new \app\models\Profile();
         $profile = $profile->getForUser($_SESSION['user_id']);
@@ -35,8 +35,8 @@ class Comment extends \app\core\Controller{
 
     #[Login]
     #[HasProfile]
-    public function update($comment_id) {
-        $comment = \app\models\Comment::find($comment_id);
+    public function update($publication_comment_id) {
+        $comment = \app\models\Comment::find($publication_comment_id);
         $profile = new \app\models\Profile();
         $profile = $profile->getForUser($_SESSION['user_id']);
 

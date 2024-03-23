@@ -10,8 +10,8 @@ $this->addRoute('Publication/view/{id}' , 'Publication,displayPublicationById');
 $this->addRoute('Publication/update/{publication_id}' , 'Publication,update');
 $this->addRoute('Publication/delete' , 'Publication,delete');
 $this->addRoute('Comment/add/{publication_id}' , 'Comment,store');
-$this->addRoute('Comment/update/{comment_id}' , 'Comment,update');
-$this->addRoute('Comment/delete/{comment_id}' , 'Comment,delete');
+$this->addRoute('Comment/update/{publication_comment_id}' , 'Comment,update');
+$this->addRoute('Comment/delete/{publication_comment_id}' , 'Comment,delete');
 
 $this->addRoute('User/logout' , 'User,logout');
 $this->addRoute('User/update' , 'User,update');
