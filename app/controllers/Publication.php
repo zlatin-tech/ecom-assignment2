@@ -70,12 +70,25 @@ class Publication extends \app\core\Controller{
     // Remove the specified publication from the database
     #[Login]
     #[HasProfile]
-    public function destroy($id) {
-        $publication = new \app\models\Publication();
-        $publication->publication_id = $id;
-        $publication->deletePublication();
-        header('Location:/Main/index');
+    public function delete() {
+        if(isset($_POST['publication_id'])){
+            $publication_id = $_POST['publication_id'];
+            $publication = \app\models\Publication::getPublicationById($publication_id);    
+            $profile = new \app\models\Profile();
+            $profile = $profile->getForUser($_SESSION['user_id']);
+    
+            if($publication && $publication->profile_id == $profile->profile_id){
+                $publication->deletePublication();
+                header('Location:/Main/index');
+            }else{
+                header('Location:/Publication/view/'.$publication_id);
+            }
+        } else {
+            // Handle the case where publication_id is not set in POST request
+            header('Location:/Main/index');
+        }
     }
+    
 
     public function search() {
         $searchTerm = $_GET['search'];

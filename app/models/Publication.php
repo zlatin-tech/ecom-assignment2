@@ -44,7 +44,7 @@ class Publication extends \app\core\Model{
     }
 
     // Delete a publication
-    public function deletePublication($publicationId) {
+    public function deletePublication() {
         $SQL = 'DELETE FROM publication WHERE publication_id = :publication_id';
         $STMT = self::getConnection()->prepare($SQL);
         $data = ['publication_id'=>$this->publication_id];

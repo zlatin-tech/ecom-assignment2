@@ -8,6 +8,7 @@ $this->addRoute('Publication/edit/{publication_id}' , 'Publication,edit');
 $this->addRoute('Publication/store' , 'Publication,store');
 $this->addRoute('Publication/view/{id}' , 'Publication,displayPublicationById');
 $this->addRoute('Publication/update/{publication_id}' , 'Publication,update');
+$this->addRoute('Publication/delete' , 'Publication,delete');
 
 $this->addRoute('User/logout' , 'User,logout');
 $this->addRoute('User/update' , 'User,update');
