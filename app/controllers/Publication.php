@@ -89,6 +89,7 @@ class Publication extends \app\core\Controller{
         }
     }
     
+    
 
     public function search() {
         $searchTerm = $_GET['search'];

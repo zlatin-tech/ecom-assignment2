@@ -69,6 +69,13 @@ class Publication extends \app\core\Model{
         // Fetch the result as an instance of 'app\models\Publication' class
         return $STMT->fetch();
     }
+    public static function getPublicationsByProfileId($profileId) {
+        $SQL = 'SELECT * FROM publication WHERE profile_id = :profile_id';
+        $STMT = self::getConnection()->prepare($SQL);
+        $data = ['profile_id' => $profileId];
+        $STMT->execute($data);
+        return $STMT->fetchAll(PDO::FETCH_CLASS, 'app\models\Publication');
+    }
     
 
 
